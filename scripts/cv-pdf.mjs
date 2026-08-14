@@ -19,15 +19,6 @@ const esc = (s) =>
 
 const perfil = esc(cv.summary);
 
-const softTagLabels = {
-	'Orientación a la fiabilidad y al detalle': 'Fiabilidad y rigor en el código',
-	'Resolución de problemas en entornos críticos': 'Resolución de problemas',
-};
-const softTags = cv.softSkills
-	.filter((s) => /fiabilidad|detalle|problemas|resoluci/.test(s.skill.toLowerCase()))
-	.slice(0, 2)
-	.map((s) => esc(softTagLabels[s.skill] || s.skill));
-
 const trayecto = [];
 let cur = null;
 for (const line of cv.trajectory.lines) {
@@ -64,7 +55,7 @@ const iconPaths = {
 	map: 'M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z M12 10a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z',
 };
 const icon = (name) =>
-	`<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${iconPaths[name]}"/></svg>`;
+	`<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${iconPaths[name]}"/></svg>`;
 
 const contact = [
 	{ label: esc(person.email), href: `mailto:${person.email}`, icon: 'mail' },
@@ -206,33 +197,22 @@ const html = `<!doctype html>
 		color: #444444;
 		line-height: 1.55;
 	}
-	.head .tags { margin-top: 6px; }
-	.head .tag {
-		display: inline-block;
-		margin: 0 2px;
-		padding: 2px 9px;
-		border-radius: 999px;
-		background: #a8dadc;
-		color: #2a3b4c;
-		font-size: 7.6pt;
-		font-weight: 600;
-		letter-spacing: 0.02em;
-	}
 	.head .location {
 		margin-top: 5px;
 		font-size: 8.4pt;
 		font-weight: 600;
 		color: #2a3b4c;
 	}
-	.head .location svg { margin-right: 4px; }
+	.head .location svg { margin-right: 5px; color: #a8dadc; }
 	.head .contact { margin-top: 3px; font-size: 8.2pt; }
 	.head .clink {
 		display: inline-flex;
 		align-items: center;
-		gap: 4px;
+		gap: 5px;
 		color: #2a3b4c;
 		text-decoration: none;
 	}
+	.head .clink svg { color: #a8dadc; }
 	.head .sep { margin: 0 6px; color: #a8dadc; }
 
 	.row {
@@ -287,7 +267,6 @@ const html = `<!doctype html>
 			<h1>${esc(person.name)}</h1>
 			<div class="role">${esc(person.role)}</div>
 			<p class="profile">${perfil}</p>
-			<div class="tags">${softTags.map((t) => `<span class="tag">${t}</span>`).join('')}</div>
 			<div class="location">${icon('map')} ${esc(person.location)}</div>
 			<div class="contact">
 				${contact
