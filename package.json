@@ -1,0 +1,17 @@
+{
+  "name": "mi-cv",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "web"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace web",
+    "build:web": "npm run build --workspace web",
+    "preview:web": "npm run preview --workspace web"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

@@ -1,6 +1,15 @@
-# Repo público de exposición: solo se sube el README.md
-# El código real del proyecto se mantiene en local / repo privado.
+# Dependencias
+node_modules/
+web/node_modules/
 
-*
-!.gitignore
-!README.md
+# Build
+web/dist/
+web/.astro/
+
+# Netlify (config local de la CLI, rutas absolutas del equipo)
+web/.netlify/
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log

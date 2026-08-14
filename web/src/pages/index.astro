@@ -1,0 +1,365 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TerminalWindow from '../components/TerminalWindow.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import ContactIcon from '../components/icons/ContactIcon.astro';
+import cv from '../data/cv.json';
+
+const person = cv.person;
+const skills = cv.skills;
+
+const trajectoryGroups = [];
+let currentTrajectoryGroup = null;
+for (const line of cv.trajectory.lines) {
+	if (line.includes('|')) {
+		currentTrajectoryGroup = { title: line, items: [] };
+		trajectoryGroups.push(currentTrajectoryGroup);
+	} else if (currentTrajectoryGroup) {
+		currentTrajectoryGroup.items.push(line);
+	}
+}
+
+const skillGroups = [
+	{ key: 'lenguajes', label: 'lenguajes' },
+	{ key: 'frameworks', label: 'frameworks' },
+	{ key: 'basesDeDatos', label: 'base-de-datos' },
+	{ key: 'devopsYHerramientas', label: 'devops-y-herramientas' },
+	{ key: 'complementario', label: 'frontend-complementario' },
+];
+---
+
+<BaseLayout>
+	<div class="screen-only mx-auto max-w-5xl px-4 py-10 sm:px-6">
+		<header>
+			<TerminalWindow title={`juanmanuel@${person.alias.toLowerCase()}: ~/cv`}>
+				<div class="grid gap-10 md:grid-cols-[1fr_410px]">
+					<div>
+						<p class="text-xs text-muted">
+							<span class="prompt">$</span> whoami
+						</p>
+						<h1 class="mt-3 text-3xl font-bold leading-tight text-green sm:text-4xl">
+							{person.name}
+						</h1>
+						<p class="mt-2 text-lg text-ink sm:text-xl">{person.role}</p>
+
+						<p class="mt-5 max-w-xl text-sm leading-relaxed text-muted">{cv.bio}</p>
+
+						<div class="mt-6 flex flex-wrap gap-4 text-xs text-muted">
+							<span class="inline-flex items-center gap-2">
+								<ContactIcon name="map" class="h-4 w-4 text-green" />
+								{person.location}
+							</span>
+							<a
+								class="inline-flex items-center gap-2 hover:text-cyan"
+								href={`mailto:${person.email}`}
+							>
+								<ContactIcon name="mail" class="h-4 w-4 text-green" />
+								{person.email}
+							</a>
+						</div>
+					</div>
+
+					<aside class="border border-line rounded-lg bg-panel-2 p-5">
+						<p class="text-xs text-muted">
+							<span class="prompt">$</span> cat <span class="text-yellow">contact.json</span>
+						</p>
+						<p class="mt-4 space-y-1 text-[0.75rem] leading-relaxed">
+							<span class="block text-muted">{'{'}</span>
+							<span class="flex gap-2">
+								<span class="contact-key shrink-0">"email":</span>
+								<a class="break-all text-cyan" href={`mailto:${person.email}`}>
+									"{person.email}"
+								</a>
+							</span>
+							<span class="flex gap-2">
+								<span class="contact-key shrink-0">"github":</span>
+								<a class="break-all text-cyan" href={person.github} target="_blank" rel="noopener noreferrer">
+									"{person.github.replace('https://', '')}"
+								</a>
+							</span>
+							<span class="flex gap-2">
+								<span class="contact-key shrink-0">"linkedin":</span>
+								<a class="break-all text-cyan" href={person.linkedin} target="_blank" rel="noopener noreferrer">
+									"{person.linkedin.replace('https://www.', '')}"
+								</a>
+							</span>
+							<span class="flex gap-2">
+								<span class="contact-key shrink-0">"location":</span>
+								<span class="break-all text-cyan">"{person.location}"</span>
+							</span>
+							<span class="flex gap-2">
+								<span class="contact-key shrink-0">"openTo":</span>
+								<span class="text-green">true</span>
+							</span>
+							<span class="block text-muted">{'}'}</span>
+						</p>
+
+						<div class="mt-5 flex flex-col gap-2">
+							<a
+								class="inline-flex items-center gap-2 text-xs text-muted hover:text-cyan"
+								href={person.github}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<ContactIcon name="github" class="h-4 w-4 text-green" />
+								GitHub · {person.alias}
+							</a>
+							<a
+								class="inline-flex items-center gap-2 text-xs text-muted hover:text-cyan"
+								href={person.linkedin}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<ContactIcon name="linkedin" class="h-4 w-4 text-green" />
+								LinkedIn
+							</a>
+						</div>
+
+						<div class="mt-5 flex flex-wrap gap-2">
+							<button class="btn w-full" onclick="window.print()" type="button">
+								<span aria-hidden="true">↓</span> Descargar PDF
+							</button>
+						</div>
+
+						<p class="mt-4 text-center text-[0.68rem] text-muted">
+							<span class="tag-status tag-status--done">disponible</span>
+							<span class="mt-2 block">{person.availability}</span>
+						</p>
+					</aside>
+				</div>
+			</TerminalWindow>
+		</header>
+
+		<main class="mt-10 flex flex-col gap-10">
+			<section>
+				<SectionTitle command="cat" title="~/trayectoria" />
+				<TerminalWindow title="trajectory.md">
+					<div class="flex flex-col gap-2">
+						<p class="text-sm text-ink">{cv.trajectory.title}</p>
+						<div class="trajectory mt-1">
+							{cv.trajectory.lines.map((line, i) => (
+								<p
+									class:list={[
+										'text-xs leading-relaxed',
+										i === 0 || line.includes('| Actualidad') ? 'text-green' : 'text-muted',
+									]}
+								>
+									<span class="mr-2 select-none text-green">{'>'}</span>
+									{line}
+								</p>
+							))}
+						</div>
+					</div>
+				</TerminalWindow>
+			</section>
+
+			<section>
+				<SectionTitle command="ls" title="~/stack" />
+				<TerminalWindow title="skills/">
+					<div class="skills flex flex-col gap-6">
+						{skillGroups.map((group) => (
+							<div>
+								<p class="mb-3 text-xs text-purple">
+									<span class="select-none text-green">▸</span> {group.label}/
+								</p>
+								<div class="flex flex-wrap gap-2">
+									{skills[group.key].map((skill) => <span class="chip">{skill}</span>)}
+								</div>
+							</div>
+						))}
+					</div>
+				</TerminalWindow>
+			</section>
+
+			<section>
+				<SectionTitle command="cat" title="~/soft-skills" />
+				<TerminalWindow title="soft-skills.json">
+					<ul class="softskills flex flex-col gap-4">
+						{cv.softSkills.map((item) => (
+							<li class="grid gap-1 sm:grid-cols-[240px_1fr] sm:gap-6">
+								<span class="text-sm text-green">{item.skill}</span>
+								<span class="text-sm leading-relaxed text-muted">{item.description}</span>
+							</li>
+						))}
+					</ul>
+				</TerminalWindow>
+			</section>
+
+			<section>
+				<SectionTitle command="ls -l" title="~/proyectos" />
+				<div class="projects flex flex-col gap-6">
+					{cv.projects.map((project) => (
+						<TerminalWindow title={`~/proyectos/${project.name.toLowerCase()}`}>
+							<div class="flex flex-wrap items-baseline justify-between gap-3">
+								<h3 class="text-base font-bold text-cyan">{project.name}</h3>
+								<span
+									class:list={[
+										'tag-status',
+										project.status === 'Completo' ? 'tag-status--done' : '',
+									]}
+								>
+									{project.status}
+								</span>
+							</div>
+							<p class="mt-1 text-xs text-muted">{project.tagline}</p>
+							<p class="proj-desc mt-4 text-sm leading-relaxed text-ink">{project.description}</p>
+
+							<div class="mt-4 flex flex-wrap gap-2">
+								{project.tech.map((tech) => <span class="chip">{tech}</span>)}
+							</div>
+
+							<ul class="proj-list mt-5">
+								{project.highlights.map((highlight) => <li>{highlight}</li>)}
+							</ul>
+						</TerminalWindow>
+					))}
+				</div>
+			</section>
+
+			<section class="grid gap-10 md:grid-cols-2">
+				<div>
+					<SectionTitle command="cat" title="~/formacion" />
+					<TerminalWindow title="education.json">
+						<ul class="flex flex-col gap-4">
+							{cv.education.map((item) => (
+								<li>
+									<p class="text-sm text-ink">
+										<span class="mr-2 select-none text-green">{'>>'}</span>
+										{item.title}
+									</p>
+									<p class="mt-1 pl-5 text-xs text-muted">
+										{item.institution}
+										{item.period ? <span class="text-muted"> · {item.period}</span> : null}
+									</p>
+								</li>
+							))}
+						</ul>
+					</TerminalWindow>
+				</div>
+
+				<div>
+					<SectionTitle command="cat" title="~/idiomas" />
+					<TerminalWindow title="languages.json">
+						<ul class="flex flex-col gap-4">
+							{cv.languages.map((item) => (
+								<li class="flex items-baseline justify-between gap-4">
+									<span class="text-sm text-ink">
+										<span class="mr-2 select-none text-green">{'>>'}</span>
+										{item.language}
+									</span>
+									<span class="text-xs text-muted">{item.level}</span>
+								</li>
+							))}
+						</ul>
+					</TerminalWindow>
+				</div>
+			</section>
+		</main>
+
+		<footer class="mt-12 pb-6 text-center text-xs text-muted">
+			<p>
+				<span class="prompt no-print">$</span>
+				<span class="no-print">./deploy.sh && echo </span>
+				<span class="text-green">'200 OK'</span>
+			</p>
+			<p class="mt-2">
+				© {new Date().getFullYear()} {person.name} · Desarrollado con Astro
+			</p>
+		</footer>
+	</div>
+
+	<div class="cv-print">
+		<header class="cv-head">
+			<h1>{person.name}</h1>
+			<p class="cv-role">{person.role}</p>
+			<p class="cv-bio">{cv.bio}</p>
+			<p class="cv-contact">
+				<span>{person.location}</span>
+				<span>{person.email}</span>
+				<span>{person.github.replace('https://', '')}</span>
+				<span>{person.linkedin.replace('https://www.', '')}</span>
+			</p>
+		</header>
+
+		<section class="cv-row">
+			<h2 class="cv-title">Formación</h2>
+			<div class="cv-body">
+				{cv.education.map((item) => (
+					<p class="cv-edu">
+						<span class="cv-edu-title">
+							{item.period && <span class="cv-period">{item.period}</span>}
+							{item.title}
+						</span>
+						<span class="cv-sub">{item.institution}</span>
+					</p>
+				))}
+			</div>
+		</section>
+
+		<section class="cv-row">
+			<h2 class="cv-title">Experiencia</h2>
+			<div class="cv-body">
+				{cv.projects.map((project) => (
+					<article class="cv-proj">
+						<p class="cv-proj-head">
+							<span class="cv-period">{project.status}</span>
+							<span class="cv-proj-name">{project.name}</span>
+						</p>
+						<p class="cv-sub">{project.tagline}</p>
+						<p class="cv-tech">Tecnologías: {project.tech.join(', ')}</p>
+						<ul class="cv-list">
+							{project.highlights.map((highlight) => <li>{highlight}</li>)}
+						</ul>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="cv-row">
+			<h2 class="cv-title">Trayectoria</h2>
+			<div class="cv-body">
+				{trajectoryGroups.map((group) => (
+					<div class="cv-proj">
+						<p class="cv-proj-name">{group.title}</p>
+						<ul class="cv-list">
+							{group.items.map((item) => <li>{item}</li>)}
+						</ul>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<section class="cv-row">
+			<h2 class="cv-title">Idiomas</h2>
+			<div class="cv-body">
+				{cv.languages.map((lang) => (
+					<p class="cv-lang">
+						<span class="cv-lang-name">{lang.language}</span>
+						<span class="cv-lang-sep">|</span>
+						<span class="cv-sub">{lang.level}</span>
+					</p>
+				))}
+			</div>
+		</section>
+
+		<section class="cv-row">
+			<h2 class="cv-title">Habilidades</h2>
+			<div class="cv-body">
+				<p class="cv-group-label">Técnicas</p>
+				{skillGroups.map((group) => (
+					<p class="cv-skill">
+						<span class="cv-skill-label">{group.label}:</span> {skills[group.key].join(', ')}
+					</p>
+				))}
+				<p class="cv-group-label">Soft skills</p>
+				<ul class="cv-list">
+					{cv.softSkills.map((item) => (
+						<li>
+							<strong>{item.skill}:</strong> {item.description}
+						</li>
+					))}
+				</ul>
+			</div>
+		</section>
+	</div>
+</BaseLayout>

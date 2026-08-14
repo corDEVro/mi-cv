@@ -1,0 +1,184 @@
+{
+  "person": {
+    "name": "Juan Manuel Cordero Ganfornina",
+    "alias": "corDEVro",
+    "role": "Desarrollador Backend Junior",
+    "location": "Chiclana de la Frontera (Cádiz)",
+    "availability": "Disponible para oportunidades junior · remoto o Cádiz",
+    "email": "jmcorderoganfornina@gmail.com",
+    "github": "https://github.com/corDEVro",
+    "linkedin": "https://www.linkedin.com/in/juan-manuel-cor-gan"
+  },
+  "bio": "Más de 10 años de experiencia en Automatización Industrial programando PLCs y variadores de frecuencia, diseñando esquemas eléctricos y liderando proyectos llave en mano desde la oferta hasta la entrega final. Tras esa etapa he redirigido mi carrera hacia el desarrollo de software backend, donde aplico el rigor, la orientación a la fiabilidad y el trato directo con el cliente que aprendí en la industria. Actualmente busco mi primera oportunidad profesional como desarrollador backend.",
+  "skills": {
+    "lenguajes": [
+      "Java",
+      "PHP",
+      "TypeScript",
+      "JavaScript",
+      "SQL"
+    ],
+    "frameworks": [
+      "Spring Boot",
+      "Spring Security",
+      "Spring Data JPA",
+      "Spring WebFlux",
+      "Prisma",
+      "Next.js",
+      "Hibernate"
+    ],
+    "basesDeDatos": [
+      "PostgreSQL",
+      "MySQL",
+      "SQLite",
+      "R2DBC"
+    ],
+    "devopsYHerramientas": [
+      "Docker",
+      "docker-compose",
+      "Git",
+      "Maven",
+      "Node.js",
+      "JUnit",
+      "REST APIs",
+      "JWT"
+    ],
+    "complementario": [
+      "React",
+      "Astro",
+      "Tailwind CSS",
+      "Vite"
+    ]
+  },
+  "softSkills": [
+    {
+      "skill": "Comunicación con clientes",
+      "description": "Trato directo en ofertas, seguimiento y entrega de proyectos llave en mano, traduciendo necesidades técnicas a soluciones."
+    },
+    {
+      "skill": "Gestión y coordinación de equipos",
+      "description": "Coordinación de equipos durante la puesta en marcha, repartiendo tareas y asegurando plazos."
+    },
+    {
+      "skill": "Resolución de problemas en entornos críticos",
+      "description": "Diagnóstico y corrección de incidencias en plantas en producción, priorizando la disponibilidad y la seguridad."
+    },
+    {
+      "skill": "Responsabilidad y autonomía",
+      "description": "Encargado de fases completas del proyecto, de la oferta a la entrega final, con plena autonomía técnica."
+    },
+    {
+      "skill": "Documentación técnica",
+      "description": "Redacción de documentación de diseño, manuales de usuario y registros de puesta en marcha."
+    },
+    {
+      "skill": "Orientación a la fiabilidad y al detalle",
+      "description": "El rigor del entorno industrial aplicado al código: pruebas, control de cambios y calidad."
+    }
+  ],
+  "projects": [
+
+        {
+      "name": "ApplyFlow",
+      "tagline": "Generador de CVs y cartas de presentación con IA",
+      "status": "Completo",
+      "description": "Backend en Spring Boot que consume OpenRouter (IA) para adaptar CVs, hace web scraping con Jsoup y genera PDFs con OpenPDF, desplegado en producción con Dockerfile multi-stage.",
+      "highlights": [
+        "Integración con IA externa y prompt engineering (prompts por variables de entorno)",
+        "Web scraping robusto: User-Agent realista, redirects y límites de tamaño",
+        "Tests unitarios JUnit verificando el PDF generado"
+      ],
+      "tech": ["Java", "Spring Boot", "OpenRouter", "Jsoup", "OpenPDF", "Apache POI", "Docker", "Render"]
+    },
+
+        {
+      "name": "Ilerna-Homes",
+      "tagline": "Portal inmobiliario (proyecto académico)",
+      "status": "Completo",
+      "description": "Aplicación web con PHP MVC propio y MySQL: login con sesiones y verificación de contraseñas con bcrypt, esquema relacional con favoritos e inmuebles.",
+      "highlights": [
+        "Autenticación segura con prepared statements y error genérico intencional",
+        "Esquema relacional con FKs y CASCADE",
+        "Arquitectura MVC con punto de entrada único"
+      ],
+      "tech": ["PHP", "MySQL", "PDO"]
+    },
+
+    {
+      "name": "InmoSaaS",
+      "tagline": "API REST para gestión de inmuebles con autenticación JWT",
+      "status": "En desarrollo",
+      "description": "Plataforma SaaS con backend en Spring Boot: API REST autenticada con Spring Security + JWT y contraseñas con BCrypt, capas controller/service/repository con patrón DTO y mappers, validación declarativa con Bean Validation y manejo global de excepciones.",
+      "highlights": [
+        "Autenticación JWT stateless de extremo a extremo (filtro OncePerRequestFilter)",
+        "Arquitectura en capas con DTOs que ocultan datos sensibles",
+        "Colección de pruebas de la API documentada en Bruno"
+      ],
+      "tech": ["Java", "Spring Boot", "Spring Security", "JWT", "PostgreSQL", "Docker", "React"]
+    },
+
+
+    {
+      "name": "SneakSell",
+      "tagline": "Gestor de stock para el mercado del resell",
+      "status": "En desarrollo",
+      "description": "Backend en Java + Spring Boot con PostgreSQL: CRUD REST completo con status codes correctos y modelo relacional con constraints, en contenedores Docker.",
+      "highlights": [
+        "CRUD REST completo (GET, POST, PUT, DELETE) con respuestas 201/404",
+        "Modelo relacional con FKs, CHECK constraints y ON DELETE CASCADE",
+        "docker-compose con script de inicialización de esquema"
+      ],
+      "tech": ["Java", "Spring Boot", "Spring Data JPA", "PostgreSQL", "Docker"]
+    },
+    {
+      "name": "EDAR-Twin",
+      "tagline": "Gemelo digital de una estación depuradora (simulación)",
+      "status": "En desarrollo",
+      "description": "Proyecto con Spring WebFlux + R2DBC y PostgreSQL: simulación reactiva no bloqueante de sensores con Flux, orientado a una futura API reactiva con SSE/WebSockets.",
+      "highlights": [
+        "Programación reactiva con backpressure (Flux.interval)",
+        "Acceso a datos no bloqueante con R2DBC",
+        "Roadmap definido: API reactiva, alertas y ventanas temporales"
+      ],
+      "tech": ["Java", "Spring WebFlux", "R2DBC", "PostgreSQL", "Docker"]
+    }
+
+  ],
+  "education": [
+    {
+      "title": "CFGS Desarrollo de Aplicaciones Web",
+      "institution": "ILERNA",
+      "period": "2024 - 2026"
+    },
+    {
+      "title": "CFGS Automatización y Robótica Industrial",
+      "institution": "Manuel Lora Tamayo | Jerez de la Frontera",
+      "period": "2015 - 2017"
+    }
+  ],
+  "languages": [
+    {
+      "language": "Español",
+      "level": "Nativo"
+    },
+    {
+      "language": "Inglés",
+      "level": "A2"
+    }
+  ],
+  "trajectory": {
+    "title": "De la planta industrial al servidor",
+    "lines": [
+      "2017 | Actualidad · Experiencia en Automatización Industrial",
+      "Programación de PLCs y variadores de frecuencia",
+      "Diseño de esquemas eléctricos y documentación técnica",
+      "Puestas en marcha y proyectos llave en mano (oferta → entrega)",
+      "Gestión y coordinación de equipos",
+      "2025 | Actualidad · Giro profesional hacia el desarrollo backend",
+      "Desarrollo de APIs REST",
+      "Gestión de bases de datos (PostgreSQL, MySQL, SQLite)",
+      "Diseño de esquemas relacionales y migraciones",
+      "Autenticación y seguridad con JWT"
+    ]
+  }
+}

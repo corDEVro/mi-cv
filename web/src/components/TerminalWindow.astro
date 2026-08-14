@@ -1,0 +1,20 @@
+---
+interface Props {
+	title: string;
+	children?: any;
+}
+
+const { title } = Astro.props;
+---
+
+<div class="window">
+	<div class="window-bar no-print">
+		<span class="dot dot-red"></span>
+		<span class="dot dot-yellow"></span>
+		<span class="dot dot-green"></span>
+		<span class="window-title">{title}</span>
+	</div>
+	<div class="window-body">
+		<slot />
+	</div>
+</div>
