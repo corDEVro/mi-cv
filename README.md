@@ -2,8 +2,9 @@
 
 Web en vivo: **https://cordevro-cv.netlify.app**
 
-Proyecto personal: currículum vitae en formato web con estética de terminal/backend,
-diseñado para que quien lo visite pueda **descargárselo en PDF con los mismos estilos**.
+Proyecto personal: currículum vitae en formato web con estética de terminal/backend.
+En pantalla se muestra el CV como una sesión de terminal; el botón **Descargar PDF**
+genera un documento A4 minimalista en blanco y negro con estilo de plantilla profesional.
 
 ## Requisitos
 
@@ -24,10 +25,15 @@ npm run preview:web  # previsualiza el build
 
 ## Descarga en PDF
 
-La web usa **CSS `@media print`**: el botón *Descargar PDF* abre el diálogo de impresión
-del navegador con los mismos estilos (estructura, tipografía monoespaciada y colores).
-Elige *Guardar como PDF* y listo. En pantalla se ve con fondo oscuro; en el PDF se
-invierte a fondo blanco para que la tinta no se desperdicie y sea legible.
+La web genera el PDF con **CSS `@media print`**: el botón *Descargar PDF* abre el
+diálogo de impresión del navegador, donde eliges *Guardar como PDF*.
+
+En pantalla se ve el CV con estética de terminal (fondo oscuro). Al imprimir se
+oculta esa vista y se muestra un documento independiente `.cv-print` con estética
+minimalista profesional: **A4, fondo blanco, blanco/negro y grises**, cabecera
+centrada (nombre, rol, perfil y contacto), cuerpo en dos columnas con los títulos
+de sección a la izquierda (Formación, Experiencia, Trayectoria, Idiomas,
+Habilidades) y reglas horizontales finas entre bloques.
 
 ## Publicar la web
 
@@ -36,6 +42,7 @@ La web es estática, sirve en Netlify, GitHub Pages, Vercel, etc.
 En **Netlify** (desde la raíz del repo):
 - Build command: `npm run build:web`
 - Publish directory: `web/dist`
+- Node version: usa Node 22 (`.nvmrc`)
 
 Actualiza también `site` en `web/astro.config.mjs` con tu dominio real.
 
