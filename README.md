@@ -25,15 +25,20 @@ npm run preview:web  # previsualiza el build
 
 ## Descarga en PDF
 
-La web genera el PDF con **CSS `@media print`**: el botón *Descargar PDF* abre el
-diálogo de impresión del navegador, donde eliges *Guardar como PDF*.
+El botón *Descargar PDF* descarga un documento estático **`web/public/cv.pdf`**,
+generado aparte con estética minimalista profesional: **A4, fondo blanco,
+blanco/negro y grises**, cabecera centrada (nombre, rol, perfil y contacto),
+cuerpo en dos columnas con los títulos de sección a la izquierda (Formación,
+Experiencia, Proyectos, Habilidades e Idiomas) y reglas horizontales finas.
 
-En pantalla se ve el CV con estética de terminal (fondo oscuro). Al imprimir se
-oculta esa vista y se muestra un documento independiente `.cv-print` con estética
-minimalista profesional: **A4, fondo blanco, blanco/negro y grises**, cabecera
-centrada (nombre, rol, perfil y contacto), cuerpo en dos columnas con los títulos
-de sección a la izquierda (Formación, Experiencia, Trayectoria, Idiomas,
-Habilidades) y reglas horizontales finas entre bloques.
+Para regenerarlo cuando cambies `cv.json`:
+
+```bash
+npm run pdf     # renderiza web/public/cv.pdf con Playwright + Chromium
+```
+
+(Requiere instalar el navegador la primera vez: `npx playwright install chromium`.)
+El PDF se versiona en el repo y se sirve estáticamente con el resto de la web.
 
 ## Publicar la web
 

@@ -7,18 +7,6 @@ import cv from '../data/cv.json';
 
 const person = cv.person;
 const skills = cv.skills;
-
-const trajectoryGroups = [];
-let currentTrajectoryGroup = null;
-for (const line of cv.trajectory.lines) {
-	if (line.includes('|')) {
-		currentTrajectoryGroup = { title: line, items: [] };
-		trajectoryGroups.push(currentTrajectoryGroup);
-	} else if (currentTrajectoryGroup) {
-		currentTrajectoryGroup.items.push(line);
-	}
-}
-
 const skillGroups = [
 	{ key: 'lenguajes', label: 'lenguajes' },
 	{ key: 'frameworks', label: 'frameworks' },
@@ -29,7 +17,7 @@ const skillGroups = [
 ---
 
 <BaseLayout>
-	<div class="screen-only mx-auto max-w-5xl px-4 py-10 sm:px-6">
+	<div class="mx-auto max-w-5xl px-4 py-10 sm:px-6">
 		<header>
 			<TerminalWindow title={`juanmanuel@${person.alias.toLowerCase()}: ~/cv`}>
 				<div class="grid gap-10 md:grid-cols-[1fr_410px]">
@@ -116,9 +104,9 @@ const skillGroups = [
 						</div>
 
 						<div class="mt-5 flex flex-wrap gap-2">
-							<button class="btn w-full" onclick="window.print()" type="button">
+							<a class="btn w-full" href="/cv.pdf" download="CV-Juan-Manuel-Cordero.pdf">
 								<span aria-hidden="true">↓</span> Descargar PDF
-							</button>
+							</a>
 						</div>
 
 						<p class="mt-4 text-center text-[0.68rem] text-muted">
@@ -266,100 +254,5 @@ const skillGroups = [
 				© {new Date().getFullYear()} {person.name} · Desarrollado con Astro
 			</p>
 		</footer>
-	</div>
-
-	<div class="cv-print">
-		<header class="cv-head">
-			<h1>{person.name}</h1>
-			<p class="cv-role">{person.role}</p>
-			<p class="cv-bio">{cv.bio}</p>
-			<p class="cv-contact">
-				<span>{person.location}</span>
-				<span>{person.email}</span>
-				<span>{person.github.replace('https://', '')}</span>
-				<span>{person.linkedin.replace('https://www.', '')}</span>
-			</p>
-		</header>
-
-		<section class="cv-row">
-			<h2 class="cv-title">Formación</h2>
-			<div class="cv-body">
-				{cv.education.map((item) => (
-					<p class="cv-edu">
-						<span class="cv-edu-title">
-							{item.period && <span class="cv-period">{item.period}</span>}
-							{item.title}
-						</span>
-						<span class="cv-sub">{item.institution}</span>
-					</p>
-				))}
-			</div>
-		</section>
-
-		<section class="cv-row">
-			<h2 class="cv-title">Experiencia</h2>
-			<div class="cv-body">
-				{cv.projects.map((project) => (
-					<article class="cv-proj">
-						<p class="cv-proj-head">
-							<span class="cv-period">{project.status}</span>
-							<span class="cv-proj-name">{project.name}</span>
-						</p>
-						<p class="cv-sub">{project.tagline}</p>
-						<p class="cv-tech">Tecnologías: {project.tech.join(', ')}</p>
-						<ul class="cv-list">
-							{project.highlights.map((highlight) => <li>{highlight}</li>)}
-						</ul>
-					</article>
-				))}
-			</div>
-		</section>
-
-		<section class="cv-row">
-			<h2 class="cv-title">Trayectoria</h2>
-			<div class="cv-body">
-				{trajectoryGroups.map((group) => (
-					<div class="cv-proj">
-						<p class="cv-proj-name">{group.title}</p>
-						<ul class="cv-list">
-							{group.items.map((item) => <li>{item}</li>)}
-						</ul>
-					</div>
-				))}
-			</div>
-		</section>
-
-		<section class="cv-row">
-			<h2 class="cv-title">Idiomas</h2>
-			<div class="cv-body">
-				{cv.languages.map((lang) => (
-					<p class="cv-lang">
-						<span class="cv-lang-name">{lang.language}</span>
-						<span class="cv-lang-sep">|</span>
-						<span class="cv-sub">{lang.level}</span>
-					</p>
-				))}
-			</div>
-		</section>
-
-		<section class="cv-row">
-			<h2 class="cv-title">Habilidades</h2>
-			<div class="cv-body">
-				<p class="cv-group-label">Técnicas</p>
-				{skillGroups.map((group) => (
-					<p class="cv-skill">
-						<span class="cv-skill-label">{group.label}:</span> {skills[group.key].join(', ')}
-					</p>
-				))}
-				<p class="cv-group-label">Soft skills</p>
-				<ul class="cv-list">
-					{cv.softSkills.map((item) => (
-						<li>
-							<strong>{item.skill}:</strong> {item.description}
-						</li>
-					))}
-				</ul>
-			</div>
-		</section>
 	</div>
 </BaseLayout>

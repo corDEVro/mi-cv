@@ -248,15 +248,11 @@ a:hover {
 	color: var(--color-green);
 }
 
-/* --- CV para el PDF (oculto en pantalla, solo se muestra al imprimir) --- */
-.cv-print {
-	display: none;
-}
-
+/* --- impresión: la web descarga un PDF estático (cv.pdf); esto es solo un respaldo legible --- */
 @media print {
 	@page {
 		size: A4;
-		margin: 9mm 10mm;
+		margin: 10mm;
 	}
 
 	:root {
@@ -273,214 +269,22 @@ a:hover {
 		--color-purple: #5b2d90;
 	}
 
-	/* La web de terminal no sale en el PDF */
-	.screen-only {
+	body {
+		background: #ffffff;
+		background-image: none;
+		color: var(--color-ink);
+	}
+
+	.no-print,
+	footer,
+	.btn,
+	.cursor,
+	.window-bar {
 		display: none !important;
 	}
 
-	body {
-		background: #ffffff !important;
-		background-image: none !important;
-		color: #111111;
-		font-family: Helvetica, Arial, "Segoe UI", Roboto, sans-serif;
-		font-size: 8.6pt;
-		line-height: 1.45;
-	}
-
-	/* --- cabecera --- */
-	.cv-print {
-		display: block !important;
-	}
-
-	.cv-print h1,
-	.cv-print h2,
-	.cv-print p,
-	.cv-print ul {
-		margin: 0;
-	}
-
-	.cv-head {
-		text-align: center;
-		padding-bottom: 9px;
-		border-bottom: 1.5px solid #111111;
-		margin-bottom: 8px;
-	}
-
-	.cv-head h1 {
-		font-size: 25pt;
-		font-weight: 700;
-		letter-spacing: 0.01em;
-		color: #111111;
-		line-height: 1.1;
-	}
-
-	.cv-role {
-		margin-top: 2px;
-		font-size: 10pt;
-		text-transform: uppercase;
-		letter-spacing: 0.18em;
-		color: #444444;
-	}
-
-	.cv-bio {
-		max-width: 88%;
-		margin: 8px auto 0;
-		font-size: 8.4pt;
-		line-height: 1.5;
-		color: #333333;
-		text-align: center;
-	}
-
-	.cv-contact {
-		margin-top: 8px;
-		font-size: 8.4pt;
-		color: #111111;
-	}
-
-	.cv-contact span + span::before {
-		content: " · ";
-		color: #111111;
-	}
-
-	/* --- cuerpo en dos columnas --- */
-	.cv-row {
-		display: grid;
-		grid-template-columns: 30% 1fr;
-		gap: 0 14px;
-		padding: 8px 0;
-		border-bottom: 1px solid #c9c9c9;
-	}
-
-	.cv-row:last-child {
-		border-bottom: none;
-	}
-
-	.cv-title {
-		font-size: 9.5pt;
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.12em;
-		color: #111111;
-	}
-
-	.cv-body {
-		font-size: 8.6pt;
-		color: #333333;
-	}
-
-	.cv-body ul {
-		list-style: none;
-		padding: 0;
-	}
-
-	.cv-sub {
-		color: #555555;
-		font-size: 8.2pt;
-	}
-
-	.cv-period {
-		margin-right: 6px;
-		color: #555555;
-	}
-
-	/* --- formación --- */
-	.cv-edu {
-		margin-bottom: 5px;
-		break-inside: avoid;
-	}
-
-	.cv-edu-title {
-		display: block;
-		font-weight: 700;
-		color: #111111;
-	}
-
-	.cv-edu .cv-sub {
-		display: block;
-	}
-
-	/* --- experiencia / trayectoria --- */
-	.cv-proj {
-		margin-bottom: 7px;
-		break-inside: avoid;
-	}
-
-	.cv-proj:last-child {
-		margin-bottom: 0;
-	}
-
-	.cv-proj-head {
-		margin: 0;
-	}
-
-	.cv-proj-name {
-		font-weight: 700;
-		color: #111111;
-	}
-
-	.cv-tech {
-		margin-top: 1px;
-		font-size: 8pt;
-		color: #555555;
-	}
-
-	.cv-list {
-		margin-top: 3px;
-		padding-left: 14px !important;
-	}
-
-	.cv-list li {
-		list-style: disc;
-		margin-bottom: 1px;
-		color: #333333;
-	}
-
-	.cv-list strong {
-		color: #111111;
-	}
-
-	/* --- idiomas --- */
-	.cv-lang {
-		margin-bottom: 2px;
-	}
-
-	.cv-lang-name {
-		font-weight: 700;
-		color: #111111;
-	}
-
-	.cv-lang-sep {
-		margin: 0 6px;
-		color: #777777;
-	}
-
-	/* --- habilidades --- */
-	.cv-group-label {
-		margin-top: 5px;
-		margin-bottom: 2px;
-		font-size: 8.4pt;
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		color: #111111;
-	}
-
-	.cv-group-label:first-child {
-		margin-top: 0;
-	}
-
-	.cv-skill {
-		margin-bottom: 2px;
-	}
-
-	.cv-skill-label {
-		font-weight: 700;
-		color: #111111;
-	}
-
-	/* --- enlaces sin URL visible --- */
-	.cv-print a {
-		color: inherit;
+	a {
+		color: var(--color-ink);
 		text-decoration: none;
 	}
 }
