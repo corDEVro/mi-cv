@@ -17,11 +17,16 @@ const esc = (s) =>
 		.replaceAll('<', '&lt;')
 		.replaceAll('>', '&gt;');
 
-const sentences = cv.bio
-	.split(/(?<=\.)\s+/)
-	.map((s) => s.trim())
-	.filter(Boolean);
-const perfil = [sentences[0], sentences.at(-1)].join(' ');
+const perfil = esc(cv.summary);
+
+const softTagLabels = {
+	'Orientación a la fiabilidad y al detalle': 'Fiabilidad y rigor en el código',
+	'Resolución de problemas en entornos críticos': 'Resolución de problemas',
+};
+const softTags = cv.softSkills
+	.filter((s) => /fiabilidad|detalle|problemas|resoluci/.test(s.skill.toLowerCase()))
+	.slice(0, 2)
+	.map((s) => esc(softTagLabels[s.skill] || s.skill));
 
 const trayecto = [];
 let cur = null;
@@ -50,11 +55,25 @@ const skillGroups = [
 	{ label: 'Frontend', items: cv.skills.complementario },
 ].map((g) => ({ label: esc(g.label), items: g.items.map(esc) }));
 
+const iconPaths = {
+	mail: 'M2 4h20a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7',
+	github:
+		'M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4M9 18c-4.51 2-5-2-7-2',
+	linkedin:
+		'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V8h4v2a6 6 0 0 1 2-2ZM2 9h4v12H2zM4 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4Z',
+	map: 'M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z M12 10a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z',
+};
+const icon = (name) =>
+	`<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${iconPaths[name]}"/></svg>`;
+
 const contact = [
-	esc(person.location),
-	esc(person.email),
-	esc(person.github.replace('https://', '')),
-	esc(person.linkedin.replace('https://www.', '')),
+	{ label: esc(person.email), href: `mailto:${person.email}`, icon: 'mail' },
+	{ label: esc(person.github.replace('https://', '')), href: person.github, icon: 'github' },
+	{
+		label: esc(person.linkedin.replace('https://www.', '')),
+		href: person.linkedin,
+		icon: 'linkedin',
+	},
 ];
 
 const rows = [];
@@ -157,13 +176,19 @@ const html = `<!doctype html>
 		line-height: 1.5;
 	}
 	.wrap { max-width: 184mm; margin: 0 auto; }
+	.topbar {
+		height: 4px;
+		margin-bottom: 6px;
+		background: linear-gradient(90deg, #a8dadc, #2a3b4c);
+		border-radius: 2px;
+	}
 
-	.head { text-align: center; border-bottom: 1.5px solid #111111; padding-bottom: 9px; }
+	.head { text-align: center; border-bottom: 1.5px solid #2a3b4c; padding-bottom: 7px; }
 	.head h1 {
 		font-size: 21pt;
 		font-weight: 700;
 		letter-spacing: 0.03em;
-		color: #111111;
+		color: #2a3b4c;
 		line-height: 1.15;
 	}
 	.head .role {
@@ -172,24 +197,50 @@ const html = `<!doctype html>
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.26em;
-		color: #444444;
+		color: #6b7a8a;
 	}
 	.head .profile {
-		margin: 7px auto 0;
+		margin: 6px auto 0;
 		max-width: 170mm;
 		font-size: 8.4pt;
 		color: #444444;
 		line-height: 1.55;
 	}
-	.head .contact { margin-top: 7px; font-size: 8.2pt; color: #111111; }
-	.head .contact .sep { color: #9a9a9a; }
+	.head .tags { margin-top: 6px; }
+	.head .tag {
+		display: inline-block;
+		margin: 0 2px;
+		padding: 2px 9px;
+		border-radius: 999px;
+		background: #a8dadc;
+		color: #2a3b4c;
+		font-size: 7.6pt;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+	}
+	.head .location {
+		margin-top: 5px;
+		font-size: 8.4pt;
+		font-weight: 600;
+		color: #2a3b4c;
+	}
+	.head .location svg { margin-right: 4px; }
+	.head .contact { margin-top: 3px; font-size: 8.2pt; }
+	.head .clink {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		color: #2a3b4c;
+		text-decoration: none;
+	}
+	.head .sep { margin: 0 6px; color: #a8dadc; }
 
 	.row {
 		display: grid;
 		grid-template-columns: 30mm 1fr;
 		gap: 0 7mm;
-		padding: 8px 0;
-		border-bottom: 0.8px solid #d6d6d6;
+		padding: 6px 0;
+		border-bottom: 0.8px solid #e0e6ed;
 		break-inside: avoid;
 		page-break-inside: avoid;
 	}
@@ -199,34 +250,49 @@ const html = `<!doctype html>
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 0.14em;
-		color: #111111;
+		color: #2a3b4c;
 		padding-top: 1px;
 	}
+	.sec::after {
+		content: '';
+		display: block;
+		width: 16px;
+		height: 2px;
+		margin-top: 3px;
+		border-radius: 1px;
+		background: #a8dadc;
+	}
 
-	.body h3 { font-size: 9pt; font-weight: 700; color: #111111; margin-bottom: 1px; }
+	.body h3 { font-size: 9pt; font-weight: 700; color: #2a3b4c; margin-bottom: 1px; }
 	.body .sub { color: #666666; font-size: 8.2pt; }
 	ul.bullets { margin: 2px 0 0 13px; padding: 0; }
 	ul.bullets li { color: #333333; }
+	ul.bullets li::marker { color: #2a3b4c; }
 	.item { margin-bottom: 6px; break-inside: avoid; page-break-inside: avoid; }
 	.item:last-child { margin-bottom: 0; }
-	.proj { margin-bottom: 7px; break-inside: avoid; page-break-inside: avoid; }
+	.proj { margin-bottom: 6px; break-inside: avoid; page-break-inside: avoid; }
 	.proj:last-child { margin-bottom: 0; }
-	.proj .status { color: #888888; font-size: 8pt; font-weight: 400; }
-	.tech { color: #666666; font-size: 7.8pt; margin-top: 1px; }
+	.proj .status { color: #6b7a8a; font-size: 8pt; font-weight: 400; }
+	.tech { color: #7a8794; font-size: 7.8pt; margin-top: 1px; }
 	.skill { margin-bottom: 2px; }
-	.skill b { color: #111111; }
+	.skill b { color: #2a3b4c; }
 	.lang { margin-bottom: 2px; }
-	.lang b { color: #111111; }
+	.lang b { color: #2a3b4c; }
 </style>
 </head>
 <body>
 	<div class="wrap">
+		<div class="topbar"></div>
 		<header class="head">
 			<h1>${esc(person.name)}</h1>
 			<div class="role">${esc(person.role)}</div>
-			<p class="profile">${esc(perfil)}</p>
+			<p class="profile">${perfil}</p>
+			<div class="tags">${softTags.map((t) => `<span class="tag">${t}</span>`).join('')}</div>
+			<div class="location">${icon('map')} ${esc(person.location)}</div>
 			<div class="contact">
-				${contact.map((c, i) => (i ? `<span class="sep"> · </span>${c}` : c)).join('')}
+				${contact
+					.map((c) => `<a class="clink" href="${esc(c.href)}">${icon(c.icon)}<span>${c.label}</span></a>`)
+					.join('<span class="sep">·</span>')}
 			</div>
 		</header>
 		${rows.join('')}
