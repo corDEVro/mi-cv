@@ -80,6 +80,19 @@
   "projects": [
 
         {
+      "name": "Buscador Cromos",
+      "tagline": "App web full-stack para llevar el álbum de cromos de la Liga Este 2026/27",
+      "status": "Completo",
+      "description": "SPA React con API REST en Spring Boot 4 y PostgreSQL: autenticación JWT stateless con BCrypt, catálogo de 562 cromos sincronizado desde JSON con upsert idempotente al arrancar, colecciones aisladas por usuario y despliegue completo en producción.",
+      "highlights": [
+        "Spring Security con JWT firmado HMAC-SHA512, CORS restringido y aislamiento estricto de datos por usuario",
+        "Catálogo versionado en JSON cargado con upsert idempotente vía migraciones Flyway",
+        "Pipeline CI/CD real: cada push despliega la API en Render (Docker) y la web en Netlify automáticamente"
+      ],
+      "tech": ["Java", "Spring Boot", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Docker", "Netlify", "Render", "Neon"]
+    },
+
+        {
       "name": "ApplyFlow",
       "tagline": "Generador de CVs y cartas de presentación con IA",
       "status": "Completo",
