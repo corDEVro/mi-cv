@@ -108,7 +108,7 @@
       "tech": ["Java", "Spring Boot", "OpenRouter", "Jsoup", "OpenPDF", "Apache POI", "Docker", "Render"],
       "links": {
         "github": "https://github.com/corDEVro/applyflow",
-        "live": "https://applyflow.netlify.app"
+        "live": "https://applyflow-cordevro.netlify.app"
       }
     },
     {
