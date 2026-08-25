@@ -36,6 +36,8 @@ const projects = cv.projects.filter((p) => p.status === 'Completo').map((p) => (
 	tagline: esc(p.tagline),
 	tech: esc(p.tech.join(', ')),
 	highlights: p.highlights.slice(0, 2).map(esc),
+	github: p.links?.github || '',
+	live: p.links?.live || '',
 }));
 
 const skillGroups = [
@@ -109,11 +111,12 @@ rows.push(`
 		<div class="body">
 			${projects
 				.map(
-					(p) => `
+						(p) => `
 			<div class="proj">
 				<h3>${p.name} <span class="status">— ${p.status}</span></h3>
 				<div class="sub">${p.tagline}</div>
 				<div class="tech">${p.tech}</div>
+				${(p.github || p.live) ? `<div class="links">${p.github ? `<span>${esc(p.github.replace('https://', ''))}</span>` : ''}${p.github && p.live ? ' · ' : ''}${p.live ? `<span>${esc(p.live.replace('https://', ''))}</span>` : ''}</div>` : ''}
 				<ul class="bullets">
 					${p.highlights.map((h) => `<li>${h}</li>`).join('')}
 				</ul>
@@ -254,6 +257,7 @@ const html = `<!doctype html>
 	.proj:last-child { margin-bottom: 0; }
 	.proj .status { color: #6b7a8a; font-size: 8pt; font-weight: 400; }
 	.tech { color: #7a8794; font-size: 7.8pt; margin-top: 1px; }
+	.links { color: #5a6a7a; font-size: 7.5pt; margin-top: 2px; }
 	.skill { margin-bottom: 2px; }
 	.skill b { color: #2a3b4c; }
 	.lang { margin-bottom: 2px; }
