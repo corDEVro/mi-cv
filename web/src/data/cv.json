@@ -79,7 +79,7 @@
   ],
   "projects": [
 
-        {
+    {
       "name": "Buscador Cromos",
       "tagline": "App web full-stack para llevar el álbum de cromos de la Liga Este 2026/27",
       "status": "Completo",
@@ -89,10 +89,13 @@
         "Catálogo versionado en JSON cargado con upsert idempotente vía migraciones Flyway",
         "Pipeline CI/CD real: cada push despliega la API en Render (Docker) y la web en Netlify automáticamente"
       ],
-      "tech": ["Java", "Spring Boot", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Docker", "Netlify", "Render", "Neon"]
+      "tech": ["Java", "Spring Boot", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Docker", "Netlify", "Render", "Neon"],
+      "links": {
+        "github": "https://github.com/corDEVro/buscador-cromos",
+        "live": "https://buscador-cromos.netlify.app"
+      }
     },
-
-        {
+    {
       "name": "ApplyFlow",
       "tagline": "Generador de CVs y cartas de presentación con IA",
       "status": "Completo",
@@ -102,10 +105,13 @@
         "Web scraping robusto: User-Agent realista, redirects y límites de tamaño",
         "Tests unitarios JUnit verificando el PDF generado"
       ],
-      "tech": ["Java", "Spring Boot", "OpenRouter", "Jsoup", "OpenPDF", "Apache POI", "Docker", "Render"]
+      "tech": ["Java", "Spring Boot", "OpenRouter", "Jsoup", "OpenPDF", "Apache POI", "Docker", "Render"],
+      "links": {
+        "github": "https://github.com/corDEVro/applyflow",
+        "live": "https://applyflow.netlify.app"
+      }
     },
-
-        {
+    {
       "name": "Ilerna-Homes",
       "tagline": "Portal inmobiliario (proyecto académico)",
       "status": "Completo",
@@ -115,9 +121,12 @@
         "Esquema relacional con FKs y CASCADE",
         "Arquitectura MVC con punto de entrada único"
       ],
-      "tech": ["PHP", "MySQL", "PDO"]
+      "tech": ["PHP", "MySQL", "PDO"],
+      "links": {
+        "github": "https://github.com/corDEVro/ilerna_homes",
+        "live": "https://ilerna-homes.onrender.com"
+      }
     },
-
     {
       "name": "InmoSaaS",
       "tagline": "API REST para gestión de inmuebles con autenticación JWT",
@@ -128,10 +137,11 @@
         "Arquitectura en capas con DTOs que ocultan datos sensibles",
         "Colección de pruebas de la API documentada en Bruno"
       ],
-      "tech": ["Java", "Spring Boot", "Spring Security", "JWT", "PostgreSQL", "Docker", "React"]
+      "tech": ["Java", "Spring Boot", "Spring Security", "JWT", "PostgreSQL", "Docker", "React"],
+      "links": {
+        "github": "https://github.com/corDEVro/inmosaas"
+      }
     },
-
-
     {
       "name": "SneakSell",
       "tagline": "Gestor de stock para el mercado del resell",
@@ -142,7 +152,10 @@
         "Modelo relacional con FKs, CHECK constraints y ON DELETE CASCADE",
         "docker-compose con script de inicialización de esquema"
       ],
-      "tech": ["Java", "Spring Boot", "Spring Data JPA", "PostgreSQL", "Docker"]
+      "tech": ["Java", "Spring Boot", "Spring Data JPA", "PostgreSQL", "Docker"],
+      "links": {
+        "github": "https://github.com/corDEVro/sneaksell"
+      }
     },
     {
       "name": "EDAR-Twin",
@@ -154,7 +167,10 @@
         "Acceso a datos no bloqueante con R2DBC",
         "Roadmap definido: API reactiva, alertas y ventanas temporales"
       ],
-      "tech": ["Java", "Spring WebFlux", "R2DBC", "PostgreSQL", "Docker"]
+      "tech": ["Java", "Spring WebFlux", "R2DBC", "PostgreSQL", "Docker"],
+      "links": {
+        "github": "https://github.com/corDEVro/edar-twin"
+      }
     }
 
   ],

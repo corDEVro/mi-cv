@@ -190,6 +190,20 @@ const skillGroups = [
 								</span>
 							</div>
 							<p class="mt-1 text-xs text-muted">{project.tagline}</p>
+							<div class="mt-3 flex flex-wrap gap-3 text-xs">
+								{project.links?.github && (
+									<a class="inline-flex items-center gap-1.5 text-muted hover:text-cyan" href={project.links.github} target="_blank" rel="noopener noreferrer">
+										<ContactIcon name="github" class="h-3.5 w-3.5 text-green" />
+										GitHub
+									</a>
+								)}
+								{project.links?.live && (
+									<a class="inline-flex items-center gap-1.5 text-muted hover:text-cyan" href={project.links.live} target="_blank" rel="noopener noreferrer">
+										<span class="text-green">↗</span>
+										Web
+									</a>
+								)}
+							</div>
 							<p class="proj-desc mt-4 text-sm leading-relaxed text-ink">{project.description}</p>
 
 							<div class="mt-4 flex flex-wrap gap-2">

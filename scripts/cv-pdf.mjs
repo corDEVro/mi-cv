@@ -30,7 +30,7 @@ for (const line of cv.trajectory.lines) {
 	}
 }
 
-const projects = cv.projects.slice(0, 4).map((p) => ({
+const projects = cv.projects.filter((p) => p.status === 'Completo').map((p) => ({
 	name: esc(p.name),
 	status: esc(p.status),
 	tagline: esc(p.tagline),
