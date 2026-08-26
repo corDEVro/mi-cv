@@ -7,7 +7,8 @@
     "availability": "Disponible para oportunidades junior · remoto o Cádiz",
     "email": "jmcorderoganfornina@gmail.com",
     "github": "https://github.com/corDEVro",
-    "linkedin": "https://www.linkedin.com/in/juan-manuel-cor-gan"
+    "linkedin": "https://www.linkedin.com/in/juan-manuel-cor-gan",
+    "landing": "https://cordevro-cv.netlify.app"
   },
   "bio": "Más de 10 años de experiencia en Automatización Industrial programando PLCs y variadores de frecuencia, diseñando esquemas eléctricos y liderando proyectos llave en mano desde la oferta hasta la entrega final. Tras esa etapa he redirigido mi carrera hacia el desarrollo de software backend, donde aplico el rigor, la orientación a la fiabilidad y el trato directo con el cliente que aprendí en la industria. Actualmente busco mi primera oportunidad profesional como desarrollador backend.",
   "summary": "Desarrollador backend junior especializado en APIs REST con Java, Spring Boot y bases de datos. Aplico al desarrollo web la fiabilidad, el rigor y el detalle de más de 10 años de industria.",
@@ -16,7 +17,6 @@
       "Java",
       "PHP",
       "TypeScript",
-      "JavaScript",
       "SQL"
     ],
     "frameworks": [
@@ -24,22 +24,18 @@
       "Spring Security",
       "Spring Data JPA",
       "Spring WebFlux",
-      "Prisma",
-      "Next.js",
       "Hibernate"
     ],
     "basesDeDatos": [
       "PostgreSQL",
       "MySQL",
-      "SQLite",
-      "R2DBC"
+      "SQLite"
     ],
     "devopsYHerramientas": [
       "Docker",
       "docker-compose",
       "Git",
       "Maven",
-      "Node.js",
       "JUnit",
       "REST APIs",
       "JWT"

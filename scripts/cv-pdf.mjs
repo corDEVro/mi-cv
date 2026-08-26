@@ -77,6 +77,11 @@ const contact = [
 		href: person.linkedin,
 		icon: 'linkedin',
 	},
+	{
+		label: esc(person.landing.replace('https://', '')),
+		href: person.landing,
+		icon: 'link',
+	},
 ];
 
 const rows = [];
@@ -123,7 +128,7 @@ rows.push(`
 				.map(
 						(p) => `
 			<div class="proj">
-				<h3>${p.name} <span class="status">— ${p.status}</span></h3>
+				<h3><span class="proj-name">${p.name}</span> <span class="status">— ${p.status}</span></h3>
 				<div class="sub">${p.tagline}</div>
 				<div class="tech">${p.tech}</div>
 				<div class="plinks">
@@ -147,7 +152,7 @@ rows.push(`
 				.map(
 					(p) => `
 			<div class="proj proj-dev">
-				<h3>${p.name}</h3>
+				<h3><span class="proj-name">${p.name}</span></h3>
 				<div class="sub">${p.tagline}</div>
 				<div class="plinks">
 					${p.github ? `<a class="plink" href="${p.github}">${icon('github')}<span>${esc(p.github.replace('https://', ''))}</span></a>` : ''}
@@ -279,6 +284,11 @@ const html = `<!doctype html>
 	}
 
 	.body h3 { font-size: 9pt; font-weight: 700; color: #2a3b4c; margin-bottom: 1px; }
+	.body h3 .proj-name {
+		background: #e8f4f4;
+		border-radius: 3px;
+		padding: 1px 6px;
+	}
 	.body .sub { color: #666666; font-size: 8.2pt; }
 	ul.bullets { margin: 2px 0 0 13px; padding: 0; }
 	ul.bullets li { color: #333333; }
