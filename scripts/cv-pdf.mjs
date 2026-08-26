@@ -19,7 +19,7 @@ const esc = (s) =>
 
 const perfil = esc(cv.summary);
 
-const trayecto = [];
+	const trayecto = [];
 let cur = null;
 for (const line of cv.trajectory.lines) {
 	if (line.includes('|')) {
@@ -29,15 +29,22 @@ for (const line of cv.trajectory.lines) {
 		cur.items.push(line);
 	}
 }
+trayecto.forEach((g) => { if (g.items.length > 4) g.items = g.items.slice(0, 4); });
 
 const projects = cv.projects.filter((p) => p.status === 'Completo').map((p) => ({
 	name: esc(p.name),
 	status: esc(p.status),
 	tagline: esc(p.tagline),
 	tech: esc(p.tech.join(', ')),
-	highlights: p.highlights.slice(0, 2).map(esc),
+		highlights: p.highlights.slice(0, 1).map(esc),
 	github: p.links?.github || '',
 	live: p.links?.live || '',
+}));
+
+const inDevProjects = cv.projects.filter((p) => p.status === 'En desarrollo').map((p) => ({
+	name: esc(p.name),
+	tagline: esc(p.tagline),
+	github: p.links?.github || '',
 }));
 
 const skillGroups = [
@@ -55,6 +62,9 @@ const iconPaths = {
 	linkedin:
 		'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V8h4v2a6 6 0 0 1 2-2ZM2 9h4v12H2zM4 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4Z',
 	map: 'M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z M12 10a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z',
+	link: 'M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71',
+	external:
+		'M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6 M15 3h6v6 M10 14 21 3',
 };
 const icon = (name) =>
 	`<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${iconPaths[name]}"/></svg>`;
@@ -116,10 +126,32 @@ rows.push(`
 				<h3>${p.name} <span class="status">— ${p.status}</span></h3>
 				<div class="sub">${p.tagline}</div>
 				<div class="tech">${p.tech}</div>
-				${(p.github || p.live) ? `<div class="links">${p.github ? `<span>${esc(p.github.replace('https://', ''))}</span>` : ''}${p.github && p.live ? ' · ' : ''}${p.live ? `<span>${esc(p.live.replace('https://', ''))}</span>` : ''}</div>` : ''}
+				<div class="plinks">
+					${p.github ? `<a class="plink" href="${p.github}">${icon('github')}<span>${esc(p.github.replace('https://', ''))}</span></a>` : ''}
+					${p.live ? `<a class="plink" href="${p.live}">${icon('external')}<span>${esc(p.live.replace('https://', ''))}</span></a>` : ''}
+				</div>
 				<ul class="bullets">
 					${p.highlights.map((h) => `<li>${h}</li>`).join('')}
 				</ul>
+			</div>`
+				)
+				.join('')}
+		</div>
+	</div>`);
+
+rows.push(`
+	<div class="row">
+		<div class="sec">En desarrollo</div>
+		<div class="body">
+			${inDevProjects
+				.map(
+					(p) => `
+			<div class="proj proj-dev">
+				<h3>${p.name}</h3>
+				<div class="sub">${p.tagline}</div>
+				<div class="plinks">
+					${p.github ? `<a class="plink" href="${p.github}">${icon('github')}<span>${esc(p.github.replace('https://', ''))}</span></a>` : ''}
+				</div>
 			</div>`
 				)
 				.join('')}
@@ -166,8 +198,8 @@ const html = `<!doctype html>
 	body {
 		font-family: 'Liberation Sans', 'DejaVu Sans', 'Noto Sans', Arial, sans-serif;
 		color: #222222;
-		font-size: 8.6pt;
-		line-height: 1.5;
+		font-size: 8.2pt;
+		line-height: 1.45;
 	}
 	.wrap { max-width: 184mm; margin: 0 auto; }
 	.topbar {
@@ -194,11 +226,11 @@ const html = `<!doctype html>
 		color: #6b7a8a;
 	}
 	.head .profile {
-		margin: 6px auto 0;
+		margin: 5px auto 0;
 		max-width: 170mm;
-		font-size: 8.4pt;
+		font-size: 7.8pt;
 		color: #444444;
-		line-height: 1.55;
+		line-height: 1.5;
 	}
 	.head .location {
 		margin-top: 5px;
@@ -220,9 +252,9 @@ const html = `<!doctype html>
 
 	.row {
 		display: grid;
-		grid-template-columns: 30mm 1fr;
-		gap: 0 7mm;
-		padding: 6px 0;
+		grid-template-columns: 28mm 1fr;
+		gap: 0 6mm;
+		padding: 4px 0;
 		border-bottom: 0.8px solid #e0e6ed;
 		break-inside: avoid;
 		page-break-inside: avoid;
@@ -251,13 +283,26 @@ const html = `<!doctype html>
 	ul.bullets { margin: 2px 0 0 13px; padding: 0; }
 	ul.bullets li { color: #333333; }
 	ul.bullets li::marker { color: #2a3b4c; }
-	.item { margin-bottom: 6px; break-inside: avoid; page-break-inside: avoid; }
+	.item { margin-bottom: 4px; break-inside: avoid; page-break-inside: avoid; }
 	.item:last-child { margin-bottom: 0; }
-	.proj { margin-bottom: 6px; break-inside: avoid; page-break-inside: avoid; }
+	.proj { margin-bottom: 4px; break-inside: avoid; page-break-inside: avoid; }
 	.proj:last-child { margin-bottom: 0; }
 	.proj .status { color: #6b7a8a; font-size: 8pt; font-weight: 400; }
 	.tech { color: #7a8794; font-size: 7.8pt; margin-top: 1px; }
 	.links { color: #5a6a7a; font-size: 7.5pt; margin-top: 2px; }
+	.links a { color: #2563eb; text-decoration: underline; }
+	.plinks { margin-top: 2px; }
+	.plink {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		color: #2a3b4c;
+		text-decoration: none;
+		font-size: 7.5pt;
+	}
+	.plink svg { color: #a8dadc; width: 10px; height: 10px; }
+	.proj-dev { margin-bottom: 3px; }
+	.proj-dev .sub { font-size: 7.8pt; }
 	.skill { margin-bottom: 2px; }
 	.skill b { color: #2a3b4c; }
 	.lang { margin-bottom: 2px; }
@@ -291,7 +336,7 @@ try {
 	const pdf = await page.pdf({
 		format: 'A4',
 		printBackground: true,
-		margin: { top: '11mm', bottom: '11mm', left: '13mm', right: '13mm' },
+		margin: { top: '8mm', bottom: '8mm', left: '12mm', right: '12mm' },
 	});
 	writeFileSync(out, pdf);
 	console.log('PDF generado:', out, `(${pdf.length} bytes)`);
